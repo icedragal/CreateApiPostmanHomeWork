@@ -1,8 +1,12 @@
 package me.egorzhuravlev.createapipostmanhomework.controller;
 
+import me.egorzhuravlev.createapipostmanhomework.model.Ingredient;
 import me.egorzhuravlev.createapipostmanhomework.model.Recipe;
 import me.egorzhuravlev.createapipostmanhomework.services.RecipeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/recipe")
@@ -18,7 +22,22 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public Recipe get(@PathVariable long id){
-        return recipeService.get(id);
+    public ResponseEntity<Recipe> get(@PathVariable long id) {
+        return ResponseEntity.of(recipeService.get(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> update(@PathVariable long id,
+                                 @RequestBody Recipe recipe){
+        return ResponseEntity.of(recipeService.update(id, recipe));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Recipe> delete(@PathVariable long id){
+        return ResponseEntity.of(recipeService.delete(id));
+    }
+    @GetMapping()
+    public Map<Long, Recipe> getAll() {
+        return recipeService.getAll();
     }
 }

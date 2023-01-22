@@ -1,10 +1,12 @@
 package me.egorzhuravlev.createapipostmanhomework.services;
 
+import me.egorzhuravlev.createapipostmanhomework.model.Ingredient;
 import me.egorzhuravlev.createapipostmanhomework.model.Recipe;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -15,7 +17,19 @@ public class RecipeService {
         return  "Добавлен рецепт: \"" + recipe.getTitle() + "\", его ID: " + idGenerator;
     }
 
-    public Recipe get(long id){
-        return recipes.get(id);
+    public Optional<Recipe> get(long id){
+        return Optional.ofNullable(recipes.get(id));
+    }
+
+    public Optional<Recipe> update(long id, Recipe recipe) {
+        return Optional.ofNullable(recipes.replace(id, recipe));
+    }
+
+    public Optional<Recipe> delete(long id) {
+        return Optional.ofNullable(recipes.remove(id));
+    }
+
+    public Map<Long, Recipe> getAll() {
+        return new HashMap<>(recipes);
     }
 }
